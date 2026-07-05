@@ -1,7 +1,7 @@
-import { ArrowRight, Coffee, Croissant, ExternalLink, MapPin, Play, Quote, Star } from "lucide-react";
+import { ArrowRight, Coffee, Croissant, ExternalLink, MapPin, Quote, Star } from "lucide-react";
 import { InstagramReelEmbed } from "@/components/InstagramReelEmbed";
-import googleDisplay from "@/assets/almond-croissant.jpg";
 import vyNgReviewPhotos from "@/assets/vy-ng-review-photos.png";
+import nonoReviewPhotos from "@/assets/nono-review-photos.png";
 
 type EmbedReviewCard = {
   type: "embed";
@@ -9,16 +9,6 @@ type EmbedReviewCard = {
   text: string;
   footer: string;
   instagramUrl: string;
-};
-
-type VideoReviewCard = {
-  type: "video";
-  badge: string;
-  text: string;
-  footer: string;
-  instagramUrl: string;
-  poster: string;
-  posterAlt: string;
 };
 
 type GoogleReviewCardData = {
@@ -35,7 +25,7 @@ type GoogleReviewCardData = {
   };
 };
 
-type ReviewCard = EmbedReviewCard | VideoReviewCard | GoogleReviewCardData;
+type ReviewCard = EmbedReviewCard | GoogleReviewCardData;
 
 const reviewCards: ReviewCard[] = [
   {
@@ -59,13 +49,17 @@ const reviewCards: ReviewCard[] = [
     },
   },
   {
-    type: "video",
-    badge: "Instagram Video",
-    text: "Everything looks gorgeous and tastes even better.",
-    footer: "Shared by a customer",
-    instagramUrl: "https://www.instagram.com/reel/DRPf2MJDsYH/?igsh=b3Nvd2Eyc2Vka3o1",
-    poster: googleDisplay,
-    posterAlt: "Close-up of a flaky almond croissant",
+    type: "google",
+    reviewer: "Nono",
+    label: "Google Review",
+    meta: "Local Guide - 11 reviews - 44 photos",
+    date: "3 weeks ago",
+    text: "Wonderful bakery serving arguably the best croissants in central Massachusetts! Nice touch on putting an order of just two croissants in a box without having to request it. Takeout only but they do serve coffee drinks. Go early on weekends to get the best selection.",
+    details: ["Price per person: $1-10", "Food: 5", "Service: 5", "Atmosphere: 4", "Recommended dishes: Croissant, Savory Croissants"],
+    photo: {
+      src: nonoReviewPhotos,
+      alt: "Nono customer photos of Yolk and Crumb pastry cases with croissants and desserts",
+    },
   },
 ];
 
@@ -105,37 +99,13 @@ function RatingBadge() {
   );
 }
 
-function VideoCard({ card, onPlay }: { card: VideoReviewCard; onPlay: (card: VideoReviewCard) => void }) {
-  return (
-    <article className="group h-full overflow-hidden rounded-3xl border border-border/70 bg-card shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
-      <button type="button" onClick={() => onPlay(card)} className="relative block aspect-[4/3] w-full overflow-hidden bg-peach text-left" aria-label={`Open ${card.badge}`}>
-        <img src={card.poster} alt={card.posterAlt} loading="lazy" className="h-full w-full object-cover transition duration-700 group-hover:scale-105 group-hover:brightness-75" />
-        <span className="absolute left-4 top-4 rounded-full bg-cream/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-caramel shadow-sm">{card.badge}</span>
-        <span className="absolute inset-0 flex items-center justify-center">
-          <span className="flex h-16 w-16 items-center justify-center rounded-full bg-cream/90 text-caramel shadow-lg transition group-hover:scale-110">
-            <Play className="ml-1 h-7 w-7 fill-current" />
-          </span>
-        </span>
-      </button>
-      <div className="p-6">
-        <Quote className="h-8 w-8 text-peach" />
-        <p className="mt-3 text-lg font-medium leading-7 text-caramel">"{card.text}"</p>
-        <div className="mt-6 flex items-center justify-between gap-3 border-t border-border/60 pt-4">
-          <p className="text-xs font-semibold uppercase tracking-widest text-toast">{card.footer}</p>
-          <ExternalLink className="h-4 w-4 text-caramel" />
-        </div>
-      </div>
-    </article>
-  );
-}
-
 function GoogleReviewCard({ card }: { card: GoogleReviewCardData }) {
   return (
     <article className="relative h-full overflow-hidden rounded-3xl border border-border/70 bg-card shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
       <Quote className="absolute right-5 top-5 h-14 w-14 text-peach/70" />
       <div className="p-6">
         <div className="flex items-start gap-3">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-peach font-serif text-lg text-caramel ring-2 ring-butter/40">V</div>
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-peach font-serif text-lg text-caramel ring-2 ring-butter/40">{card.reviewer.charAt(0)}</div>
           <div>
             <p className="font-serif text-xl leading-none text-caramel">{card.reviewer}</p>
             <p className="mt-1 text-xs text-foreground/60">{card.meta}</p>
@@ -194,10 +164,6 @@ function InstagramEmbedReviewCard({ card }: { card: EmbedReviewCard }) {
 }
 
 export function ReviewsShowcase() {
-  const handleVideoClick = (card: VideoReviewCard) => {
-    window.open(card.instagramUrl, "_blank", "noopener,noreferrer");
-  };
-
   return (
     <section className="bg-cream">
       <div className="mx-auto max-w-7xl px-4 py-20">
@@ -222,7 +188,7 @@ export function ReviewsShowcase() {
                 return <InstagramEmbedReviewCard key={`${card.badge}-${index}`} card={card} />;
               }
 
-              return card.type === "video" ? <VideoCard key={`${card.badge}-${index}`} card={card} onPlay={handleVideoClick} /> : <GoogleReviewCard key={card.reviewer} card={card} />;
+              return <GoogleReviewCard key={card.reviewer} card={card} />;
             })}
           </div>
         </div>
