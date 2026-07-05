@@ -83,7 +83,7 @@ function Home() {
       </section>
 
       {/* Featured signature */}
-      <section className="bg-cream">
+      <section className="hidden bg-cream">
         <div className="mx-auto max-w-7xl px-4 py-20">
           <div className="mx-auto max-w-2xl text-center">
             <Badge>Signature</Badge>
@@ -102,7 +102,9 @@ function Home() {
         </div>
       </section>
 
-      <Divider />
+      <div hidden>
+        <Divider />
+      </div>
 
       {/* Categories */}
       <section className="bg-peach">
@@ -131,7 +133,7 @@ function Home() {
       </section>
 
       {/* Best sellers */}
-      <section className="bg-cream">
+      <section className="hidden bg-cream">
         <div className="mx-auto max-w-7xl px-4 py-20">
           <div className="mx-auto max-w-2xl text-center">
             <Badge tone="butter">Best sellers</Badge>
