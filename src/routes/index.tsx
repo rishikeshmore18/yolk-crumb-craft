@@ -10,6 +10,7 @@ import bread from "@/assets/artisan-bread.jpg";
 import latte from "@/assets/latte.jpg";
 import butter from "@/assets/butter-croissant.jpg";
 import instagramPreview from "@/assets/instagram-profile-preview.png";
+import instagramPreviewMobile from "@/assets/instagram-profile-preview-mobile.png";
 import { Divider, Badge } from "@/components/layout/Divider";
 import { BUSINESS, HOURS } from "@/data/menu";
 import { ArrowRight, Clock, MapPin, Phone, Instagram } from "lucide-react";
@@ -205,7 +206,10 @@ function Home() {
 
           <a href={BUSINESS.instagram} target="_blank" rel="noreferrer" className="group mt-10 block rounded-[2rem] bg-peach p-3 shadow-sm transition hover:-translate-y-1 hover:shadow-xl sm:p-5" aria-label="Open Yolk and Crumb on Instagram">
             <div className="overflow-hidden rounded-[1.5rem] border border-border/70 bg-card shadow-md">
-              <img src={instagramPreview} alt="Preview of the Yolk and Crumb Instagram profile" loading="lazy" className="w-full object-cover transition duration-700 group-hover:scale-[1.01]" />
+              <picture>
+                <source media="(min-width: 640px)" srcSet={instagramPreview} />
+                <img src={instagramPreviewMobile} alt="Preview of the Yolk and Crumb Instagram profile" loading="lazy" className="w-full object-cover transition duration-700 group-hover:scale-[1.01]" />
+              </picture>
             </div>
             <div className="mt-4 flex flex-wrap items-center justify-between gap-3 px-1">
               <p className="text-sm text-foreground/70">Tap the preview to open the official Instagram profile.</p>
