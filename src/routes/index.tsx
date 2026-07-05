@@ -12,6 +12,7 @@ import butter from "@/assets/butter-croissant.jpg";
 import instagramPreview from "@/assets/instagram-profile-preview.png";
 import instagramPreviewMobile from "@/assets/instagram-profile-preview-mobile.png";
 import { Divider, Badge } from "@/components/layout/Divider";
+import { ReviewsShowcase } from "@/components/ReviewsShowcase";
 import { BUSINESS, HOURS } from "@/data/menu";
 import { ArrowRight, Clock, MapPin, Phone, Instagram } from "lucide-react";
 
@@ -190,6 +191,8 @@ function Home() {
           </div>
         </div>
       </section>
+
+      <ReviewsShowcase />
 
       {/* Instagram profile */}
       <section className="bg-cream">
