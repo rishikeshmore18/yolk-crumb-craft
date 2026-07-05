@@ -51,6 +51,9 @@ const BEST = [
 
 const GALLERY = [hero, almond, fancy, caprese, basque, chorizo, cinnamon, bread, cookie, latte, butter, choc];
 
+const SHOW_SIGNATURE_SECTION = false;
+const SHOW_BEST_SELLERS_SECTION = false;
+
 function Home() {
   return (
     <>
@@ -82,8 +85,10 @@ function Home() {
         </div>
       </section>
 
+      {SHOW_SIGNATURE_SECTION && (
+      <>
       {/* Featured signature */}
-      <section className="hidden bg-cream">
+      <section className="bg-cream">
         <div className="mx-auto max-w-7xl px-4 py-20">
           <div className="mx-auto max-w-2xl text-center">
             <Badge>Signature</Badge>
@@ -102,9 +107,9 @@ function Home() {
         </div>
       </section>
 
-      <div hidden>
-        <Divider />
-      </div>
+      <Divider />
+      </>
+      )}
 
       {/* Categories */}
       <section className="bg-peach">
@@ -132,8 +137,10 @@ function Home() {
         </div>
       </section>
 
+      {SHOW_BEST_SELLERS_SECTION && (
+      <>
       {/* Best sellers */}
-      <section className="hidden bg-cream">
+      <section className="bg-cream">
         <div className="mx-auto max-w-7xl px-4 py-20">
           <div className="mx-auto max-w-2xl text-center">
             <Badge tone="butter">Best sellers</Badge>
@@ -161,6 +168,8 @@ function Home() {
           </div>
         </div>
       </section>
+      </>
+      )}
 
       {/* Preorder teaser */}
       <section className="section-caramel">
