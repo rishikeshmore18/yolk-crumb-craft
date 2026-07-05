@@ -1,9 +1,7 @@
 import { ArrowRight, Coffee, Croissant, ExternalLink, MapPin, Play, Quote, Star } from "lucide-react";
 import { InstagramReelEmbed } from "@/components/InstagramReelEmbed";
-import heroDisplay from "@/assets/hero-croissants-display.png";
-import latte from "@/assets/latte.jpg";
 import googleDisplay from "@/assets/almond-croissant.jpg";
-import pastryDisplay from "@/assets/fancy-croissant.jpg";
+import vyNgReviewPhotos from "@/assets/vy-ng-review-photos.png";
 
 type EmbedReviewCard = {
   type: "embed";
@@ -31,10 +29,10 @@ type GoogleReviewCardData = {
   date: string;
   text: string;
   details: string[];
-  photos: Array<{
+  photo: {
     src: string;
     alt: string;
-  }>;
+  };
 };
 
 type ReviewCard = EmbedReviewCard | VideoReviewCard | GoogleReviewCardData;
@@ -55,11 +53,10 @@ const reviewCards: ReviewCard[] = [
     date: "a month ago",
     text: "Cute little bakery with a great variety of croissants, cakes, and coffees. I took my mom for Mother's Day and we might've found our new favorite carrot cake! Only downside is there's not much space to sit, but we'll definitely be back often.",
     details: ["Order type: Take out", "Food: 5", "Service: 5", "Atmosphere: 4", "Parking: Free parking lot"],
-    photos: [
-      { src: heroDisplay, alt: "Customer photo of the Yolk and Crumb pastry display" },
-      { src: latte, alt: "Customer photo of a bright bakery window seat" },
-      { src: pastryDisplay, alt: "Customer photo of colorful filled croissants" },
-    ],
+    photo: {
+      src: vyNgReviewPhotos,
+      alt: "Vy Ng customer photos of the Yolk and Crumb bakery counter, pastry case, and window seating",
+    },
   },
   {
     type: "video",
@@ -155,16 +152,9 @@ function GoogleReviewCard({ card }: { card: GoogleReviewCardData }) {
         <p className="mt-4 text-sm leading-6 text-foreground/75">"{card.text}"</p>
         <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-toast">{card.label}</p>
       </div>
-      <div className="grid grid-cols-[1.1fr_0.9fr] gap-1 border-y border-border/60 bg-peach/35 p-1">
-        <div className="aspect-[4/5] overflow-hidden rounded-l-2xl bg-peach">
-          <img src={card.photos[0].src} alt={card.photos[0].alt} loading="lazy" className="h-full w-full object-cover" />
-        </div>
-        <div className="grid gap-1">
-          {card.photos.slice(1).map((photo, index) => (
-            <div key={photo.alt} className={`overflow-hidden bg-peach ${index === 0 ? "rounded-tr-2xl" : "rounded-br-2xl"}`}>
-              <img src={photo.src} alt={photo.alt} loading="lazy" className="h-full w-full object-cover" />
-            </div>
-          ))}
+      <div className="border-y border-border/60 bg-peach/35 p-1">
+        <div className="overflow-hidden rounded-2xl bg-peach">
+          <img src={card.photo.src} alt={card.photo.alt} loading="lazy" className="w-full object-cover" />
         </div>
       </div>
       <dl className="grid grid-cols-2 gap-2 p-6 text-xs text-foreground/70">
