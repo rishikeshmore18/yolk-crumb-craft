@@ -71,6 +71,6 @@ export const BUSINESS = {
   phone: "(508) 304-1115",
   phoneHref: "tel:+15083041115",
   neighborhood: "Tatnuck Square, Worcester",
-  instagram: "https://www.instagram.com/yolk_and_crumb/?hl=en",
+  instagram: "https://www.instagram.com/yolk_and_crumb/?hl=en#",
   mapUrl: "https://maps.google.com/?q=1130+Pleasant+St,+Worcester,+MA+01602",
 };

@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import hero from "@/assets/hero-croissants-display.png";
-import galleryHero from "@/assets/hero-croissant.jpg";
 import almond from "@/assets/almond-croissant.jpg";
 import fancy from "@/assets/fancy-croissant.jpg";
 import caprese from "@/assets/caprese-croissant.jpg";
@@ -8,10 +7,9 @@ import basque from "@/assets/basque-cheesecake.jpg";
 import chorizo from "@/assets/chorizo-scone.jpg";
 import cinnamon from "@/assets/cinnamon-roll.jpg";
 import bread from "@/assets/artisan-bread.jpg";
-import cookie from "@/assets/cookie.jpg";
 import latte from "@/assets/latte.jpg";
 import butter from "@/assets/butter-croissant.jpg";
-import choc from "@/assets/chocolate-croissant.jpg";
+import logoAsset from "@/assets/logo.asset.json";
 import { Divider, Badge } from "@/components/layout/Divider";
 import { BUSINESS, HOURS } from "@/data/menu";
 import { ArrowRight, Clock, MapPin, Phone, Instagram } from "lucide-react";
@@ -49,8 +47,6 @@ const BEST = [
   { name: "Chorizo Cheddar Scone", desc: "Smoky, sharp, and endlessly craveable.", price: "$5.25", img: chorizo, tags: ["Savory"] },
   { name: "Cinnamon Roll", desc: "Laminated coil, brown butter glaze, ceylon cinnamon.", price: "$5.75", img: cinnamon, tags: ["Sweet"] },
 ];
-
-const GALLERY = [galleryHero, almond, fancy, caprese, basque, chorizo, cinnamon, bread, cookie, latte, butter, choc];
 
 const SHOW_SIGNATURE_SECTION = false;
 const SHOW_BEST_SELLERS_SECTION = false;
@@ -194,7 +190,7 @@ function Home() {
         </div>
       </section>
 
-      {/* Gallery strip */}
+      {/* Instagram profile */}
       <section className="bg-cream">
         <div className="mx-auto max-w-7xl px-4 py-20">
           <div className="flex flex-wrap items-end justify-between gap-4">
@@ -203,16 +199,54 @@ function Home() {
               <h2 className="mt-3 font-serif text-3xl text-caramel sm:text-5xl">Follow the crumb trail</h2>
             </div>
             <a href={BUSINESS.instagram} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold text-caramel underline underline-offset-4">
-              <Instagram className="h-4 w-4" /> @yolkandcrumb
+              <Instagram className="h-4 w-4" /> yolk_and_crumb
             </a>
           </div>
-          <div className="mt-10 grid grid-cols-3 gap-2 md:grid-cols-6">
-            {GALLERY.map((img, i) => (
-              <div key={i} className="aspect-square overflow-hidden rounded-xl bg-peach">
-                <img src={img} alt="" loading="lazy" className="h-full w-full object-cover transition duration-500 hover:scale-105" />
+
+          <a href={BUSINESS.instagram} target="_blank" rel="noreferrer" className="mt-10 grid overflow-hidden rounded-3xl border border-border/60 bg-card shadow-sm transition hover:-translate-y-1 hover:shadow-xl md:grid-cols-[0.9fr_1.1fr]" aria-label="Open Yolk and Crumb on Instagram">
+            <div className="bg-peach p-6 sm:p-8">
+              <div className="rounded-3xl border border-border/70 bg-cream p-5 shadow-sm">
+                <div className="flex items-center justify-between border-b border-border/60 pb-4">
+                  <div className="flex items-center gap-3">
+                    <img src={logoAsset.url} alt="Yolk & Crumb logo" className="h-14 w-14 rounded-full bg-cream object-contain ring-2 ring-caramel/20" />
+                    <div>
+                      <p className="font-semibold text-caramel">yolk_and_crumb</p>
+                      <p className="text-xs text-foreground/60">Instagram profile</p>
+                    </div>
+                  </div>
+                  <Instagram className="h-5 w-5 text-caramel" />
+                </div>
+                <div className="mt-5 grid grid-cols-3 gap-3 text-center">
+                  <div>
+                    <p className="font-serif text-2xl text-caramel">Fresh</p>
+                    <p className="text-[10px] uppercase tracking-widest text-toast">Bakes</p>
+                  </div>
+                  <div>
+                    <p className="font-serif text-2xl text-caramel">Daily</p>
+                    <p className="text-[10px] uppercase tracking-widest text-toast">Stories</p>
+                  </div>
+                  <div>
+                    <p className="font-serif text-2xl text-caramel">Local</p>
+                    <p className="text-[10px] uppercase tracking-widest text-toast">Updates</p>
+                  </div>
+                </div>
+                <div className="mt-6 rounded-2xl bg-peach/70 p-4">
+                  <p className="text-sm font-medium text-caramel">Yolk &amp; Crumb</p>
+                  <p className="mt-1 text-sm text-foreground/70">Open the live Instagram profile for current bakes, specials, and bakery updates.</p>
+                </div>
               </div>
-            ))}
-          </div>
+            </div>
+            <div className="flex flex-col justify-center p-6 sm:p-8">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-toast">Live profile</p>
+              <h3 className="mt-3 font-serif text-3xl text-caramel sm:text-4xl">See the actual bakery feed on Instagram</h3>
+              <p className="mt-4 max-w-xl text-sm leading-6 text-foreground/70">
+                This section now points to the real Yolk &amp; Crumb Instagram instead of showing placeholder bakery photos.
+              </p>
+              <span className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-caramel px-5 py-2.5 text-sm font-semibold text-cream">
+                Open yolk_and_crumb <ArrowRight className="h-4 w-4" />
+              </span>
+            </div>
+          </a>
         </div>
       </section>
 
