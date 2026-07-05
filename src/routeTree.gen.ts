@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as VisitRouteImport } from './routes/visit'
 import { Route as PreorderRouteImport } from './routes/preorder'
 import { Route as MenuRouteImport } from './routes/menu'
+import { Route as JournalRouteImport } from './routes/journal'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CateringRouteImport } from './routes/catering'
@@ -31,6 +32,11 @@ const PreorderRoute = PreorderRouteImport.update({
 const MenuRoute = MenuRouteImport.update({
   id: '/menu',
   path: '/menu',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JournalRoute = JournalRouteImport.update({
+  id: '/journal',
+  path: '/journal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GalleryRoute = GalleryRouteImport.update({
@@ -65,6 +71,7 @@ export interface FileRoutesByFullPath {
   '/catering': typeof CateringRoute
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
+  '/journal': typeof JournalRoute
   '/menu': typeof MenuRoute
   '/preorder': typeof PreorderRoute
   '/visit': typeof VisitRoute
@@ -75,6 +82,7 @@ export interface FileRoutesByTo {
   '/catering': typeof CateringRoute
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
+  '/journal': typeof JournalRoute
   '/menu': typeof MenuRoute
   '/preorder': typeof PreorderRoute
   '/visit': typeof VisitRoute
@@ -86,6 +94,7 @@ export interface FileRoutesById {
   '/catering': typeof CateringRoute
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
+  '/journal': typeof JournalRoute
   '/menu': typeof MenuRoute
   '/preorder': typeof PreorderRoute
   '/visit': typeof VisitRoute
@@ -98,6 +107,7 @@ export interface FileRouteTypes {
     | '/catering'
     | '/contact'
     | '/gallery'
+    | '/journal'
     | '/menu'
     | '/preorder'
     | '/visit'
@@ -108,6 +118,7 @@ export interface FileRouteTypes {
     | '/catering'
     | '/contact'
     | '/gallery'
+    | '/journal'
     | '/menu'
     | '/preorder'
     | '/visit'
@@ -118,6 +129,7 @@ export interface FileRouteTypes {
     | '/catering'
     | '/contact'
     | '/gallery'
+    | '/journal'
     | '/menu'
     | '/preorder'
     | '/visit'
@@ -129,6 +141,7 @@ export interface RootRouteChildren {
   CateringRoute: typeof CateringRoute
   ContactRoute: typeof ContactRoute
   GalleryRoute: typeof GalleryRoute
+  JournalRoute: typeof JournalRoute
   MenuRoute: typeof MenuRoute
   PreorderRoute: typeof PreorderRoute
   VisitRoute: typeof VisitRoute
@@ -155,6 +168,13 @@ declare module '@tanstack/react-router' {
       path: '/menu'
       fullPath: '/menu'
       preLoaderRoute: typeof MenuRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/journal': {
+      id: '/journal'
+      path: '/journal'
+      fullPath: '/journal'
+      preLoaderRoute: typeof JournalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gallery': {
@@ -201,6 +221,7 @@ const rootRouteChildren: RootRouteChildren = {
   CateringRoute: CateringRoute,
   ContactRoute: ContactRoute,
   GalleryRoute: GalleryRoute,
+  JournalRoute: JournalRoute,
   MenuRoute: MenuRoute,
   PreorderRoute: PreorderRoute,
   VisitRoute: VisitRoute,
