@@ -13,6 +13,7 @@ import { Route as VisitRouteImport } from './routes/visit'
 import { Route as PreorderRouteImport } from './routes/preorder'
 import { Route as MenuRouteImport } from './routes/menu'
 import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CateringRouteImport } from './routes/catering'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -37,6 +38,11 @@ const GalleryRoute = GalleryRouteImport.update({
   path: '/gallery',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CateringRoute = CateringRouteImport.update({
   id: '/catering',
   path: '/catering',
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/catering': typeof CateringRoute
+  '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/menu': typeof MenuRoute
   '/preorder': typeof PreorderRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/catering': typeof CateringRoute
+  '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/menu': typeof MenuRoute
   '/preorder': typeof PreorderRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/catering': typeof CateringRoute
+  '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/menu': typeof MenuRoute
   '/preorder': typeof PreorderRoute
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/catering'
+    | '/contact'
     | '/gallery'
     | '/menu'
     | '/preorder'
@@ -96,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/catering'
+    | '/contact'
     | '/gallery'
     | '/menu'
     | '/preorder'
@@ -105,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/catering'
+    | '/contact'
     | '/gallery'
     | '/menu'
     | '/preorder'
@@ -115,6 +127,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   CateringRoute: typeof CateringRoute
+  ContactRoute: typeof ContactRoute
   GalleryRoute: typeof GalleryRoute
   MenuRoute: typeof MenuRoute
   PreorderRoute: typeof PreorderRoute
@@ -151,6 +164,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GalleryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/catering': {
       id: '/catering'
       path: '/catering'
@@ -179,6 +199,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   CateringRoute: CateringRoute,
+  ContactRoute: ContactRoute,
   GalleryRoute: GalleryRoute,
   MenuRoute: MenuRoute,
   PreorderRoute: PreorderRoute,
