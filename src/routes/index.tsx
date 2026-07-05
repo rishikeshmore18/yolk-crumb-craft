@@ -9,7 +9,7 @@ import cinnamon from "@/assets/cinnamon-roll.jpg";
 import bread from "@/assets/artisan-bread.jpg";
 import latte from "@/assets/latte.jpg";
 import butter from "@/assets/butter-croissant.jpg";
-import logoAsset from "@/assets/logo.asset.json";
+import instagramPreview from "@/assets/instagram-profile-preview.png";
 import { Divider, Badge } from "@/components/layout/Divider";
 import { BUSINESS, HOURS } from "@/data/menu";
 import { ArrowRight, Clock, MapPin, Phone, Instagram } from "lucide-react";
@@ -203,46 +203,13 @@ function Home() {
             </a>
           </div>
 
-          <a href={BUSINESS.instagram} target="_blank" rel="noreferrer" className="mt-10 grid overflow-hidden rounded-3xl border border-border/60 bg-card shadow-sm transition hover:-translate-y-1 hover:shadow-xl md:grid-cols-[0.9fr_1.1fr]" aria-label="Open Yolk and Crumb on Instagram">
-            <div className="bg-peach p-6 sm:p-8">
-              <div className="rounded-3xl border border-border/70 bg-cream p-5 shadow-sm">
-                <div className="flex items-center justify-between border-b border-border/60 pb-4">
-                  <div className="flex items-center gap-3">
-                    <img src={logoAsset.url} alt="Yolk & Crumb logo" className="h-14 w-14 rounded-full bg-cream object-contain ring-2 ring-caramel/20" />
-                    <div>
-                      <p className="font-semibold text-caramel">yolk_and_crumb</p>
-                      <p className="text-xs text-foreground/60">Instagram profile</p>
-                    </div>
-                  </div>
-                  <Instagram className="h-5 w-5 text-caramel" />
-                </div>
-                <div className="mt-5 grid grid-cols-3 gap-3 text-center">
-                  <div>
-                    <p className="font-serif text-2xl text-caramel">Fresh</p>
-                    <p className="text-[10px] uppercase tracking-widest text-toast">Bakes</p>
-                  </div>
-                  <div>
-                    <p className="font-serif text-2xl text-caramel">Daily</p>
-                    <p className="text-[10px] uppercase tracking-widest text-toast">Stories</p>
-                  </div>
-                  <div>
-                    <p className="font-serif text-2xl text-caramel">Local</p>
-                    <p className="text-[10px] uppercase tracking-widest text-toast">Updates</p>
-                  </div>
-                </div>
-                <div className="mt-6 rounded-2xl bg-peach/70 p-4">
-                  <p className="text-sm font-medium text-caramel">Yolk &amp; Crumb</p>
-                  <p className="mt-1 text-sm text-foreground/70">Open the live Instagram profile for current bakes, specials, and bakery updates.</p>
-                </div>
-              </div>
+          <a href={BUSINESS.instagram} target="_blank" rel="noreferrer" className="group mt-10 block rounded-[2rem] bg-peach p-3 shadow-sm transition hover:-translate-y-1 hover:shadow-xl sm:p-5" aria-label="Open Yolk and Crumb on Instagram">
+            <div className="overflow-hidden rounded-[1.5rem] border border-border/70 bg-card shadow-md">
+              <img src={instagramPreview} alt="Preview of the Yolk and Crumb Instagram profile" loading="lazy" className="w-full object-cover transition duration-700 group-hover:scale-[1.01]" />
             </div>
-            <div className="flex flex-col justify-center p-6 sm:p-8">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-toast">Live profile</p>
-              <h3 className="mt-3 font-serif text-3xl text-caramel sm:text-4xl">See the actual bakery feed on Instagram</h3>
-              <p className="mt-4 max-w-xl text-sm leading-6 text-foreground/70">
-                This section now points to the real Yolk &amp; Crumb Instagram instead of showing placeholder bakery photos.
-              </p>
-              <span className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-caramel px-5 py-2.5 text-sm font-semibold text-cream">
+            <div className="mt-4 flex flex-wrap items-center justify-between gap-3 px-1">
+              <p className="text-sm text-foreground/70">Tap the preview to open the official Instagram profile.</p>
+              <span className="inline-flex items-center gap-2 rounded-full bg-caramel px-5 py-2.5 text-sm font-semibold text-cream">
                 Open yolk_and_crumb <ArrowRight className="h-4 w-4" />
               </span>
             </div>
