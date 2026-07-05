@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import hero from "@/assets/hero-croissant.jpg";
+import hero from "@/assets/hero-croissants-display.png";
+import galleryHero from "@/assets/hero-croissant.jpg";
 import almond from "@/assets/almond-croissant.jpg";
 import fancy from "@/assets/fancy-croissant.jpg";
 import caprese from "@/assets/caprese-croissant.jpg";
@@ -49,7 +50,7 @@ const BEST = [
   { name: "Cinnamon Roll", desc: "Laminated coil, brown butter glaze, ceylon cinnamon.", price: "$5.75", img: cinnamon, tags: ["Sweet"] },
 ];
 
-const GALLERY = [hero, almond, fancy, caprese, basque, chorizo, cinnamon, bread, cookie, latte, butter, choc];
+const GALLERY = [galleryHero, almond, fancy, caprese, basque, chorizo, cinnamon, bread, cookie, latte, butter, choc];
 
 const SHOW_SIGNATURE_SECTION = false;
 const SHOW_BEST_SELLERS_SECTION = false;
@@ -80,7 +81,7 @@ function Home() {
           </div>
           <div className="relative order-1 md:order-2">
             <div className="absolute -inset-6 -z-10 rounded-[3rem] bg-butter/30 blur-3xl" aria-hidden />
-            <img src={hero} alt="Golden flaky croissant on warm cream linen" width={1600} height={1600} className="mx-auto aspect-square w-full max-w-lg rounded-[2rem] object-cover shadow-2xl shadow-caramel/20" />
+            <img src={hero} alt="Fresh croissants and pastries displayed inside the bakery" width={1600} height={1600} className="mx-auto aspect-square w-full max-w-lg rounded-[2rem] object-cover shadow-2xl shadow-caramel/20" />
           </div>
         </div>
       </section>
