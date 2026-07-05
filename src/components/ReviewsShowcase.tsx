@@ -1,36 +1,42 @@
-import { useState } from "react";
-import { ArrowRight, Coffee, Croissant, ExternalLink, MapPin, Play, Quote, Star, X } from "lucide-react";
-import pastryDisplay from "@/assets/hero-croissants-display.png";
+import { ArrowRight, Coffee, Croissant, ExternalLink, MapPin, Play, Quote, Star } from "lucide-react";
+import { InstagramReelEmbed } from "@/components/InstagramReelEmbed";
 import googleDisplay from "@/assets/almond-croissant.jpg";
 
-type ReviewCard =
-  | {
-      type: "video";
-      badge: string;
-      text: string;
-      footer: string;
-      instagramUrl: string;
-      poster: string;
-      posterAlt: string;
-      videoSrc?: string;
-    }
-  | {
-      type: "google";
-      reviewer: string;
-      label: string;
-      text: string;
-      details: string[];
-    };
+type EmbedReviewCard = {
+  type: "embed";
+  badge: string;
+  text: string;
+  footer: string;
+  instagramUrl: string;
+};
+
+type VideoReviewCard = {
+  type: "video";
+  badge: string;
+  text: string;
+  footer: string;
+  instagramUrl: string;
+  poster: string;
+  posterAlt: string;
+};
+
+type GoogleReviewCardData = {
+  type: "google";
+  reviewer: string;
+  label: string;
+  text: string;
+  details: string[];
+};
+
+type ReviewCard = EmbedReviewCard | VideoReviewCard | GoogleReviewCardData;
 
 const reviewCards: ReviewCard[] = [
   {
-    type: "video",
+    type: "embed",
     badge: "Instagram Reel",
     text: "The croissants are unreal and worth the early visit.",
     footer: "Instagram customer share",
-    instagramUrl: "https://www.instagram.com/reel/DXR27RNkZNW/?igsh=MTM1NzZtY25vbXBwNw==",
-    poster: pastryDisplay,
-    posterAlt: "Bakery pastry display with fresh croissants and pastries",
+    instagramUrl: "https://www.instagram.com/reel/DXR27RNkZNW/",
   },
   {
     type: "google",
@@ -86,7 +92,7 @@ function RatingBadge() {
   );
 }
 
-function VideoCard({ card, onPlay }: { card: Extract<ReviewCard, { type: "video" }>; onPlay: (card: Extract<ReviewCard, { type: "video" }>) => void }) {
+function VideoCard({ card, onPlay }: { card: VideoReviewCard; onPlay: (card: VideoReviewCard) => void }) {
   return (
     <article className="group h-full overflow-hidden rounded-3xl border border-border/70 bg-card shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
       <button type="button" onClick={() => onPlay(card)} className="relative block aspect-[4/3] w-full overflow-hidden bg-peach text-left" aria-label={`Open ${card.badge}`}>
@@ -110,7 +116,7 @@ function VideoCard({ card, onPlay }: { card: Extract<ReviewCard, { type: "video"
   );
 }
 
-function GoogleReviewCard({ card }: { card: Extract<ReviewCard, { type: "google" }> }) {
+function GoogleReviewCard({ card }: { card: GoogleReviewCardData }) {
   return (
     <article className="relative h-full overflow-hidden rounded-3xl border border-border/70 bg-card p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
       <Quote className="absolute right-5 top-5 h-14 w-14 text-peach/70" />
@@ -139,15 +145,29 @@ function GoogleReviewCard({ card }: { card: Extract<ReviewCard, { type: "google"
   );
 }
 
+function InstagramEmbedReviewCard({ card }: { card: EmbedReviewCard }) {
+  return (
+    <article className="h-full overflow-hidden rounded-3xl border border-border/70 bg-card shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+      <div className="p-4">
+        <span className="inline-flex rounded-full bg-peach px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-caramel">{card.badge}</span>
+        <div className="mt-4">
+          <InstagramReelEmbed url={card.instagramUrl} title="Yolk and Crumb customer Instagram Reel" />
+        </div>
+      </div>
+      <div className="px-6 pb-6">
+        <Quote className="h-8 w-8 text-peach" />
+        <p className="mt-3 text-lg font-medium leading-7 text-caramel">"{card.text}"</p>
+        <div className="mt-6 flex items-center justify-between gap-3 border-t border-border/60 pt-4">
+          <p className="text-xs font-semibold uppercase tracking-widest text-toast">{card.footer}</p>
+          <ExternalLink className="h-4 w-4 text-caramel" />
+        </div>
+      </div>
+    </article>
+  );
+}
+
 export function ReviewsShowcase() {
-  const [activeVideo, setActiveVideo] = useState<Extract<ReviewCard, { type: "video" }> | null>(null);
-
-  const handleVideoClick = (card: Extract<ReviewCard, { type: "video" }>) => {
-    if (card.videoSrc) {
-      setActiveVideo(card);
-      return;
-    }
-
+  const handleVideoClick = (card: VideoReviewCard) => {
     window.open(card.instagramUrl, "_blank", "noopener,noreferrer");
   };
 
@@ -168,12 +188,14 @@ export function ReviewsShowcase() {
           </div>
         </div>
 
-        <div className="-mx-4 mt-12 flex snap-x gap-6 overflow-x-auto px-4 pb-4">
-          {reviewCards.map((card, index) => (
-            <div key={card.type === "video" ? `${card.badge}-${index}` : card.reviewer} className="w-[min(86vw,24rem)] shrink-0 snap-start lg:w-[25rem]">
-              {card.type === "video" ? <VideoCard card={card} onPlay={handleVideoClick} /> : <GoogleReviewCard card={card} />}
-            </div>
-          ))}
+        <div className="mt-12 grid gap-6 lg:grid-cols-3">
+          {reviewCards.map((card, index) => {
+            if (card.type === "embed") {
+              return <InstagramEmbedReviewCard key={`${card.badge}-${index}`} card={card} />;
+            }
+
+            return card.type === "video" ? <VideoCard key={`${card.badge}-${index}`} card={card} onPlay={handleVideoClick} /> : <GoogleReviewCard key={card.reviewer} card={card} />;
+          })}
         </div>
 
         <div className="mt-10 rounded-3xl border border-border/70 bg-peach/50 p-5 shadow-sm">
@@ -206,16 +228,6 @@ export function ReviewsShowcase() {
         </div>
       </div>
 
-      {activeVideo?.videoSrc && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/80 p-4" role="dialog" aria-modal="true" aria-label="Customer video">
-          <div className="relative w-full max-w-3xl overflow-hidden rounded-3xl bg-ink shadow-2xl">
-            <button type="button" onClick={() => setActiveVideo(null)} className="absolute right-3 top-3 z-10 rounded-full bg-cream p-2 text-caramel shadow-md" aria-label="Close video">
-              <X className="h-5 w-5" />
-            </button>
-            <video src={activeVideo.videoSrc} poster={activeVideo.poster} controls autoPlay playsInline className="max-h-[80vh] w-full bg-ink" />
-          </div>
-        </div>
-      )}
     </section>
   );
 }
