@@ -188,14 +188,16 @@ export function ReviewsShowcase() {
           </div>
         </div>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-3">
-          {reviewCards.map((card, index) => {
-            if (card.type === "embed") {
-              return <InstagramEmbedReviewCard key={`${card.badge}-${index}`} card={card} />;
-            }
+        <div className="-mx-4 mt-12 overflow-x-auto px-4 pb-4">
+          <div className="grid min-w-[72rem] grid-cols-3 gap-6 lg:min-w-0">
+            {reviewCards.map((card, index) => {
+              if (card.type === "embed") {
+                return <InstagramEmbedReviewCard key={`${card.badge}-${index}`} card={card} />;
+              }
 
-            return card.type === "video" ? <VideoCard key={`${card.badge}-${index}`} card={card} onPlay={handleVideoClick} /> : <GoogleReviewCard key={card.reviewer} card={card} />;
-          })}
+              return card.type === "video" ? <VideoCard key={`${card.badge}-${index}`} card={card} onPlay={handleVideoClick} /> : <GoogleReviewCard key={card.reviewer} card={card} />;
+            })}
+          </div>
         </div>
 
         <div className="mt-10 rounded-3xl border border-border/70 bg-peach/50 p-5 shadow-sm">
