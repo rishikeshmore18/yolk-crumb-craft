@@ -1,6 +1,9 @@
 import { ArrowRight, Coffee, Croissant, ExternalLink, MapPin, Play, Quote, Star } from "lucide-react";
 import { InstagramReelEmbed } from "@/components/InstagramReelEmbed";
+import heroDisplay from "@/assets/hero-croissants-display.png";
+import latte from "@/assets/latte.jpg";
 import googleDisplay from "@/assets/almond-croissant.jpg";
+import pastryDisplay from "@/assets/fancy-croissant.jpg";
 
 type EmbedReviewCard = {
   type: "embed";
@@ -24,8 +27,14 @@ type GoogleReviewCardData = {
   type: "google";
   reviewer: string;
   label: string;
+  meta: string;
+  date: string;
   text: string;
   details: string[];
+  photos: Array<{
+    src: string;
+    alt: string;
+  }>;
 };
 
 type ReviewCard = EmbedReviewCard | VideoReviewCard | GoogleReviewCardData;
@@ -41,9 +50,16 @@ const reviewCards: ReviewCard[] = [
   {
     type: "google",
     reviewer: "Vy Ng",
-    label: "Local Guide - Google Review",
+    label: "Google Review",
+    meta: "Local Guide - 91 reviews - 186 photos",
+    date: "a month ago",
     text: "Cute little bakery with a great variety of croissants, cakes, and coffees. I took my mom for Mother's Day and we might've found our new favorite carrot cake! Only downside is there's not much space to sit, but we'll definitely be back often.",
     details: ["Order type: Take out", "Food: 5", "Service: 5", "Atmosphere: 4", "Parking: Free parking lot"],
+    photos: [
+      { src: heroDisplay, alt: "Customer photo of the Yolk and Crumb pastry display" },
+      { src: latte, alt: "Customer photo of a bright bakery window seat" },
+      { src: pastryDisplay, alt: "Customer photo of colorful filled croissants" },
+    ],
   },
   {
     type: "video",
@@ -118,19 +134,40 @@ function VideoCard({ card, onPlay }: { card: VideoReviewCard; onPlay: (card: Vid
 
 function GoogleReviewCard({ card }: { card: GoogleReviewCardData }) {
   return (
-    <article className="relative h-full overflow-hidden rounded-3xl border border-border/70 bg-card p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+    <article className="relative h-full overflow-hidden rounded-3xl border border-border/70 bg-card shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
       <Quote className="absolute right-5 top-5 h-14 w-14 text-peach/70" />
-      <div className="flex gap-1 text-butter" aria-label="5 star review">
-        {Array.from({ length: 5 }).map((_, index) => (
-          <Star key={index} className="h-4 w-4 fill-current" />
-        ))}
+      <div className="p-6">
+        <div className="flex items-start gap-3">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-peach font-serif text-lg text-caramel ring-2 ring-butter/40">V</div>
+          <div>
+            <p className="font-serif text-xl leading-none text-caramel">{card.reviewer}</p>
+            <p className="mt-1 text-xs text-foreground/60">{card.meta}</p>
+          </div>
+        </div>
+        <div className="mt-5 flex flex-wrap items-center gap-2">
+          <div className="flex gap-1 text-butter" aria-label="5 star review">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <Star key={index} className="h-4 w-4 fill-current" />
+            ))}
+          </div>
+          <span className="text-xs text-foreground/60">{card.date}</span>
+        </div>
+        <p className="mt-4 text-sm leading-6 text-foreground/75">"{card.text}"</p>
+        <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-toast">{card.label}</p>
       </div>
-      <p className="mt-5 text-sm leading-6 text-foreground/75">"{card.text}"</p>
-      <div className="mt-6 border-t border-border/60 pt-5">
-        <p className="font-serif text-xl text-caramel">{card.reviewer}</p>
-        <p className="text-xs font-semibold uppercase tracking-widest text-toast">{card.label}</p>
+      <div className="grid grid-cols-[1.1fr_0.9fr] gap-1 border-y border-border/60 bg-peach/35 p-1">
+        <div className="aspect-[4/5] overflow-hidden rounded-l-2xl bg-peach">
+          <img src={card.photos[0].src} alt={card.photos[0].alt} loading="lazy" className="h-full w-full object-cover" />
+        </div>
+        <div className="grid gap-1">
+          {card.photos.slice(1).map((photo, index) => (
+            <div key={photo.alt} className={`overflow-hidden bg-peach ${index === 0 ? "rounded-tr-2xl" : "rounded-br-2xl"}`}>
+              <img src={photo.src} alt={photo.alt} loading="lazy" className="h-full w-full object-cover" />
+            </div>
+          ))}
+        </div>
       </div>
-      <dl className="mt-5 grid grid-cols-2 gap-2 text-xs text-foreground/70">
+      <dl className="grid grid-cols-2 gap-2 p-6 text-xs text-foreground/70">
         {card.details.map((detail) => {
           const [label, value] = detail.split(": ");
           return (
