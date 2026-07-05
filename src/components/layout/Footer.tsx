@@ -11,13 +11,13 @@ export function Footer() {
     <footer className="section-caramel mt-24">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 md:grid-cols-4">
         <div>
-          <div className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3 transition hover:opacity-90" aria-label="Go to homepage">
             <img src={logoAsset.url} alt="Yolk & Crumb" className="h-12 w-12 rounded-full bg-cream object-contain p-1" />
             <div>
               <p className="font-serif text-xl">Yolk &amp; Crumb</p>
               <p className="text-xs uppercase tracking-[0.2em] opacity-80">Artisan Bakeshop</p>
             </div>
-          </div>
+          </Link>
           <p className="mt-4 text-sm opacity-80">{t("footer.tagline")}</p>
         </div>
         <div>
