@@ -58,7 +58,7 @@ export function InstagramReelEmbed({ url, title = "Instagram Reel" }: { url: str
 
   return (
     <div className="overflow-hidden rounded-3xl border border-border/70 bg-peach/60 p-3 shadow-sm">
-      <div ref={embedRef} className="flex min-h-[30rem] items-center justify-center rounded-[1.25rem] bg-cream p-2">
+      <div ref={embedRef} className="flex max-h-[24rem] min-h-[20rem] items-center justify-center overflow-hidden rounded-[1.25rem] bg-cream p-2">
         <blockquote className="instagram-media w-full max-w-full" data-instgrm-permalink={cleanUrl} data-instgrm-version="14" title={title}>
           <div className="rounded-3xl border border-border/70 bg-card p-6 text-center shadow-sm">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-peach text-caramel">

@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { ArrowRight, Coffee, Croissant, ExternalLink, MapPin, Quote, Star } from "lucide-react";
 import { InstagramReelEmbed } from "@/components/InstagramReelEmbed";
 import vyNgReviewPhotos from "@/assets/vy-ng-review-photos.png";
@@ -102,16 +103,16 @@ function RatingBadge() {
 function GoogleReviewCard({ card }: { card: GoogleReviewCardData }) {
   return (
     <article className="relative h-full overflow-hidden rounded-3xl border border-border/70 bg-card shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
-      <Quote className="absolute right-5 top-5 h-14 w-14 text-peach/70" />
-      <div className="p-6">
+      <Quote className="absolute right-4 top-4 h-10 w-10 text-peach/70" />
+      <div className="p-4">
         <div className="flex items-start gap-3">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-peach font-serif text-lg text-caramel ring-2 ring-butter/40">{card.reviewer.charAt(0)}</div>
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-peach font-serif text-base text-caramel ring-2 ring-butter/40">{card.reviewer.charAt(0)}</div>
           <div>
             <p className="font-serif text-xl leading-none text-caramel">{card.reviewer}</p>
             <p className="mt-1 text-xs text-foreground/60">{card.meta}</p>
           </div>
         </div>
-        <div className="mt-5 flex flex-wrap items-center gap-2">
+        <div className="mt-4 flex flex-wrap items-center gap-2">
           <div className="flex gap-1 text-butter" aria-label="5 star review">
             {Array.from({ length: 5 }).map((_, index) => (
               <Star key={index} className="h-4 w-4 fill-current" />
@@ -119,15 +120,15 @@ function GoogleReviewCard({ card }: { card: GoogleReviewCardData }) {
           </div>
           <span className="text-xs text-foreground/60">{card.date}</span>
         </div>
-        <p className="mt-4 text-sm leading-6 text-foreground/75">"{card.text}"</p>
-        <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-toast">{card.label}</p>
+        <p className="mt-3 overflow-hidden text-sm leading-6 text-foreground/75" style={{ display: "-webkit-box", WebkitBoxOrient: "vertical", WebkitLineClamp: 4 }}>"{card.text}"</p>
+        <p className="mt-3 text-xs font-semibold uppercase tracking-widest text-toast">{card.label}</p>
       </div>
       <div className="border-y border-border/60 bg-peach/35 p-1">
-        <div className="overflow-hidden rounded-2xl bg-peach">
-          <img src={card.photo.src} alt={card.photo.alt} loading="lazy" className="w-full object-cover" />
+        <div className="max-h-36 overflow-hidden rounded-2xl bg-peach">
+          <img src={card.photo.src} alt={card.photo.alt} loading="lazy" className="h-full w-full object-cover" />
         </div>
       </div>
-      <dl className="grid grid-cols-2 gap-2 p-6 text-xs text-foreground/70">
+      <dl className="grid grid-cols-2 gap-2 p-4 text-xs text-foreground/70">
         {card.details.map((detail) => {
           const [label, value] = detail.split(": ");
           return (
@@ -145,16 +146,16 @@ function GoogleReviewCard({ card }: { card: GoogleReviewCardData }) {
 function InstagramEmbedReviewCard({ card }: { card: EmbedReviewCard }) {
   return (
     <article className="h-full overflow-hidden rounded-3xl border border-border/70 bg-card shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
-      <div className="p-4">
+      <div className="p-3">
         <span className="inline-flex rounded-full bg-peach px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-caramel">{card.badge}</span>
-        <div className="mt-4">
+        <div className="mt-3">
           <InstagramReelEmbed url={card.instagramUrl} title="Yolk and Crumb customer Instagram Reel" />
         </div>
       </div>
-      <div className="px-6 pb-6">
-        <Quote className="h-8 w-8 text-peach" />
-        <p className="mt-3 text-lg font-medium leading-7 text-caramel">"{card.text}"</p>
-        <div className="mt-6 flex items-center justify-between gap-3 border-t border-border/60 pt-4">
+      <div className="px-4 pb-4">
+        <Quote className="h-7 w-7 text-peach" />
+        <p className="mt-2 text-base font-medium leading-6 text-caramel">"{card.text}"</p>
+        <div className="mt-4 flex items-center justify-between gap-3 border-t border-border/60 pt-3">
           <p className="text-xs font-semibold uppercase tracking-widest text-toast">{card.footer}</p>
           <ExternalLink className="h-4 w-4 text-caramel" />
         </div>
@@ -164,6 +165,31 @@ function InstagramEmbedReviewCard({ card }: { card: EmbedReviewCard }) {
 }
 
 export function ReviewsShowcase() {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const pausedRef = useRef(false);
+
+  useEffect(() => {
+    let animationFrame = 0;
+
+    const scroll = () => {
+      const carousel = carouselRef.current;
+
+      if (carousel && !pausedRef.current && carousel.scrollWidth > carousel.clientWidth) {
+        carousel.scrollLeft += 0.35;
+
+        if (carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth - 1) {
+          carousel.scrollLeft = 0;
+        }
+      }
+
+      animationFrame = window.requestAnimationFrame(scroll);
+    };
+
+    animationFrame = window.requestAnimationFrame(scroll);
+
+    return () => window.cancelAnimationFrame(animationFrame);
+  }, []);
+
   return (
     <section className="bg-cream">
       <div className="mx-auto max-w-7xl px-4 py-20">
@@ -181,8 +207,29 @@ export function ReviewsShowcase() {
           </div>
         </div>
 
-        <div className="-mx-4 mt-12 overflow-x-auto px-4 pb-4">
-          <div className="grid min-w-[72rem] grid-cols-3 gap-6 lg:min-w-0">
+        <div
+          ref={carouselRef}
+          className="-mx-4 mt-12 overflow-x-auto px-4 pb-4"
+          onPointerDown={() => {
+            pausedRef.current = true;
+          }}
+          onPointerUp={() => {
+            pausedRef.current = false;
+          }}
+          onPointerCancel={() => {
+            pausedRef.current = false;
+          }}
+          onPointerLeave={() => {
+            pausedRef.current = false;
+          }}
+          onFocus={() => {
+            pausedRef.current = true;
+          }}
+          onBlur={() => {
+            pausedRef.current = false;
+          }}
+        >
+          <div className="grid min-w-[60rem] grid-cols-3 gap-5 lg:min-w-[76rem]">
             {reviewCards.map((card, index) => {
               if (card.type === "embed") {
                 return <InstagramEmbedReviewCard key={`${card.badge}-${index}`} card={card} />;
