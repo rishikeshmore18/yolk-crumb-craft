@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { ArrowRight, Coffee, Croissant, ExternalLink, MapPin, Play, Quote, Star, X } from "lucide-react";
-import { BUSINESS } from "@/data/menu";
 import pastryDisplay from "@/assets/hero-croissants-display.png";
 import googleDisplay from "@/assets/almond-croissant.jpg";
 
@@ -69,6 +68,8 @@ const trustItems = [
   },
 ];
 
+const googleReviewsUrl =
+  "https://www.google.com/maps/place/Yolk+and+Crumb/@42.2785256,-71.8552469,17z/data=!4m19!1m10!3m9!1s0x89e405001bfab589:0xea1b079aadc19fd6!2sYolk+and+Crumb!8m2!3d42.2783921!4d-71.8553252!10e5!14m1!1BCgIgAQ!16s%2Fg%2F11ml51kjbp!3m7!1s0x89e405001bfab589:0xea1b079aadc19fd6!8m2!3d42.2783921!4d-71.8553252!9m1!1b1!16s%2Fg%2F11ml51kjbp?entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D";
 const backupReelUrl = "https://www.instagram.com/reel/DXmKpTYjnrL/?igsh=MWhsbGNwdTc3YXdt";
 
 function RatingBadge() {
@@ -87,7 +88,7 @@ function RatingBadge() {
 
 function VideoCard({ card, onPlay }: { card: Extract<ReviewCard, { type: "video" }>; onPlay: (card: Extract<ReviewCard, { type: "video" }>) => void }) {
   return (
-    <article className="group overflow-hidden rounded-3xl border border-border/70 bg-card shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+    <article className="group h-full overflow-hidden rounded-3xl border border-border/70 bg-card shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
       <button type="button" onClick={() => onPlay(card)} className="relative block aspect-[4/3] w-full overflow-hidden bg-peach text-left" aria-label={`Open ${card.badge}`}>
         <img src={card.poster} alt={card.posterAlt} loading="lazy" className="h-full w-full object-cover transition duration-700 group-hover:scale-105 group-hover:brightness-75" />
         <span className="absolute left-4 top-4 rounded-full bg-cream/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-caramel shadow-sm">{card.badge}</span>
@@ -111,7 +112,7 @@ function VideoCard({ card, onPlay }: { card: Extract<ReviewCard, { type: "video"
 
 function GoogleReviewCard({ card }: { card: Extract<ReviewCard, { type: "google" }> }) {
   return (
-    <article className="relative overflow-hidden rounded-3xl border border-border/70 bg-card p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+    <article className="relative h-full overflow-hidden rounded-3xl border border-border/70 bg-card p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
       <Quote className="absolute right-5 top-5 h-14 w-14 text-peach/70" />
       <div className="flex gap-1 text-butter" aria-label="5 star review">
         {Array.from({ length: 5 }).map((_, index) => (
@@ -161,16 +162,18 @@ export function ReviewsShowcase() {
           </div>
           <div className="grid gap-4 sm:grid-cols-[auto_auto] sm:items-end">
             <RatingBadge />
-            <a href={BUSINESS.mapUrl} target="_blank" rel="noreferrer" className="group inline-flex items-center justify-center gap-2 rounded-full border border-caramel/40 px-5 py-2.5 text-sm font-semibold text-caramel transition hover:bg-peach" aria-label="See all reviews on Google Maps">
+            <a href={googleReviewsUrl} target="_blank" rel="noreferrer" className="group inline-flex items-center justify-center gap-2 rounded-full border border-caramel/40 px-5 py-2.5 text-sm font-semibold text-caramel transition hover:bg-peach" aria-label="See all reviews on Google Maps">
               See all reviews <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
             </a>
           </div>
         </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {reviewCards.map((card, index) =>
-            card.type === "video" ? <VideoCard key={`${card.badge}-${index}`} card={card} onPlay={handleVideoClick} /> : <GoogleReviewCard key={card.reviewer} card={card} />,
-          )}
+        <div className="-mx-4 mt-12 flex snap-x gap-6 overflow-x-auto px-4 pb-4">
+          {reviewCards.map((card, index) => (
+            <div key={card.type === "video" ? `${card.badge}-${index}` : card.reviewer} className="w-[min(86vw,24rem)] shrink-0 snap-start lg:w-[25rem]">
+              {card.type === "video" ? <VideoCard card={card} onPlay={handleVideoClick} /> : <GoogleReviewCard card={card} />}
+            </div>
+          ))}
         </div>
 
         <div className="mt-10 rounded-3xl border border-border/70 bg-peach/50 p-5 shadow-sm">
@@ -192,7 +195,7 @@ export function ReviewsShowcase() {
               })}
             </div>
             <div className="flex flex-wrap gap-3">
-              <a href={BUSINESS.mapUrl} target="_blank" rel="noreferrer" className="group inline-flex items-center gap-2 rounded-full bg-caramel px-5 py-2.5 text-sm font-semibold text-cream transition hover:opacity-90" aria-label="Read more Google reviews">
+              <a href={googleReviewsUrl} target="_blank" rel="noreferrer" className="group inline-flex items-center gap-2 rounded-full bg-caramel px-5 py-2.5 text-sm font-semibold text-cream transition hover:opacity-90" aria-label="Read more Google reviews">
                 Read more reviews <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
               </a>
               <a href={backupReelUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-caramel/40 px-5 py-2.5 text-sm font-semibold text-caramel transition hover:bg-cream" aria-label="Open another customer Instagram reel">
