@@ -164,6 +164,21 @@ function InstagramEmbedReviewCard({ card }: { card: EmbedReviewCard }) {
   );
 }
 
+function ReadMoreReviewsCard() {
+  return (
+    <article className="flex h-full min-h-[28rem] items-center justify-center overflow-hidden rounded-3xl border border-border/70 bg-peach/70 p-5 shadow-sm">
+      <div className="rounded-3xl border border-border/70 bg-card p-6 text-center shadow-sm">
+        <span className="inline-flex rounded-full bg-peach px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-caramel">More reviews</span>
+        <h3 className="mt-4 font-serif text-3xl text-caramel">See what locals are saying</h3>
+        <p className="mt-3 text-sm leading-6 text-foreground/70">Open the Google reviews page for more customer notes, photos, and recent bakery feedback.</p>
+        <a href={googleReviewsUrl} target="_blank" rel="noreferrer" className="group mt-6 inline-flex items-center gap-2 rounded-full bg-caramel px-5 py-2.5 text-sm font-semibold text-cream transition hover:opacity-90" aria-label="Read more Google reviews">
+          Read more reviews <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+        </a>
+      </div>
+    </article>
+  );
+}
+
 export function ReviewsShowcase() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const pausedRef = useRef(false);
@@ -176,10 +191,6 @@ export function ReviewsShowcase() {
 
       if (carousel && !pausedRef.current && carousel.scrollWidth > carousel.clientWidth) {
         carousel.scrollLeft += 0.35;
-
-        if (carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth - 1) {
-          carousel.scrollLeft = 0;
-        }
       }
 
       animationFrame = window.requestAnimationFrame(scroll);
@@ -229,7 +240,7 @@ export function ReviewsShowcase() {
             pausedRef.current = false;
           }}
         >
-          <div className="grid min-w-[60rem] grid-cols-3 gap-5 lg:min-w-[76rem]">
+          <div className="grid min-w-[80rem] grid-cols-4 gap-5 lg:min-w-[98rem]">
             {reviewCards.map((card, index) => {
               if (card.type === "embed") {
                 return <InstagramEmbedReviewCard key={`${card.badge}-${index}`} card={card} />;
@@ -237,6 +248,7 @@ export function ReviewsShowcase() {
 
               return <GoogleReviewCard key={card.reviewer} card={card} />;
             })}
+            <ReadMoreReviewsCard />
           </div>
         </div>
 
